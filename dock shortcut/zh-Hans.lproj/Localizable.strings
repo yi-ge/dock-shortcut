@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  dock shortcut
+
+  Created by yige on 2022/12/25.
+  
+*/
+CFBundleDisplayName = "Dock快捷键";
+setting = "设置";
+settingLaunchTitle = "启动：";
+settingLaunchContent = "登录时启动应用";
+settingMenuBarTitle = "菜单栏：";
+settingMenuBarContent = "显示状态图标";
+settingOptionTitle = "选项：";
+settingOptionContent = "访达作为第一个APP";
+settingHotKeyTitle = "快捷键选项:";
+settingHotKeyContent = "数字键";
+settingIssues = "报告问题";
+quit = "退出";
+menuCheckUpdate = "检查更新";
+networkError = "网络异常";
+updateNone = "没有更新";
+ignore = "忽略";
+checkedUpdateNewVersion = "找到新版本";
+goToDownload = "前往下载";
+button-ok = "确定";

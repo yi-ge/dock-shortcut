@@ -1,0 +1,391 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03025A742955383D008A0483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03025A732955383D008A0483 /* AppDelegate.swift */; };
+		03025A772955A371008A0483 /* dock_shortcutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03025A762955A371008A0483 /* dock_shortcutApp.swift */; };
+		03025A792955B102008A0483 /* DockTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03025A782955B102008A0483 /* DockTile.swift */; };
+		03BF2FF029581DC500AB63AE /* LabeledHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF2FEF29581DC500AB63AE /* LabeledHStack.swift */; };
+		03BF2FF329582C6500AB63AE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03BF2FF529582C6500AB63AE /* Localizable.strings */; };
+		03BF2FF829585C7800AB63AE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF2FF729585C7800AB63AE /* Utils.swift */; };
+		03BF2FFA295879BF00AB63AE /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF2FF9295879BF00AB63AE /* Updater.swift */; };
+		03E19A8F291DEC2B001FFD81 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E19A8E291DEC2B001FFD81 /* ContentView.swift */; };
+		03E19A91291DEC2C001FFD81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E19A90291DEC2C001FFD81 /* Assets.xcassets */; };
+		03E19A94291DEC2C001FFD81 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E19A93291DEC2C001FFD81 /* Preview Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03025A732955383D008A0483 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		03025A762955A371008A0483 /* dock_shortcutApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dock_shortcutApp.swift; sourceTree = "<group>"; };
+		03025A782955B102008A0483 /* DockTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockTile.swift; sourceTree = "<group>"; };
+		03025A7A2955B298008A0483 /* dock-shortcut-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "dock-shortcut-Info.plist"; sourceTree = SOURCE_ROOT; };
+		03BF2FEF29581DC500AB63AE /* LabeledHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledHStack.swift; sourceTree = "<group>"; };
+		03BF2FF429582C6500AB63AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		03BF2FF629582C6F00AB63AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		03BF2FF729585C7800AB63AE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		03BF2FF9295879BF00AB63AE /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		03E19A89291DEC2B001FFD81 /* dock shortcut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "dock shortcut.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03E19A8E291DEC2B001FFD81 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		03E19A90291DEC2C001FFD81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		03E19A93291DEC2C001FFD81 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		03E19A95291DEC2C001FFD81 /* dock_shortcut.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = dock_shortcut.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		03E19A86291DEC2B001FFD81 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03E19A80291DEC2B001FFD81 = {
+			isa = PBXGroup;
+			children = (
+				03E19A8B291DEC2B001FFD81 /* dock shortcut */,
+				03E19A8A291DEC2B001FFD81 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		03E19A8A291DEC2B001FFD81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				03E19A89291DEC2B001FFD81 /* dock shortcut.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		03E19A8B291DEC2B001FFD81 /* dock shortcut */ = {
+			isa = PBXGroup;
+			children = (
+				03BF2FF529582C6500AB63AE /* Localizable.strings */,
+				03BF2FEF29581DC500AB63AE /* LabeledHStack.swift */,
+				03025A7A2955B298008A0483 /* dock-shortcut-Info.plist */,
+				03025A782955B102008A0483 /* DockTile.swift */,
+				03025A762955A371008A0483 /* dock_shortcutApp.swift */,
+				03E19A8E291DEC2B001FFD81 /* ContentView.swift */,
+				03E19A90291DEC2C001FFD81 /* Assets.xcassets */,
+				03E19A95291DEC2C001FFD81 /* dock_shortcut.entitlements */,
+				03025A732955383D008A0483 /* AppDelegate.swift */,
+				03E19A92291DEC2C001FFD81 /* Preview Content */,
+				03BF2FF729585C7800AB63AE /* Utils.swift */,
+				03BF2FF9295879BF00AB63AE /* Updater.swift */,
+			);
+			path = "dock shortcut";
+			sourceTree = "<group>";
+		};
+		03E19A92291DEC2C001FFD81 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				03E19A93291DEC2C001FFD81 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		03E19A88291DEC2B001FFD81 /* dock shortcut */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03E19A98291DEC2C001FFD81 /* Build configuration list for PBXNativeTarget "dock shortcut" */;
+			buildPhases = (
+				03E19A85291DEC2B001FFD81 /* Sources */,
+				03E19A86291DEC2B001FFD81 /* Frameworks */,
+				03E19A87291DEC2B001FFD81 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "dock shortcut";
+			productName = "dock shortcut";
+			productReference = 03E19A89291DEC2B001FFD81 /* dock shortcut.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		03E19A81291DEC2B001FFD81 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					03E19A88291DEC2B001FFD81 = {
+						CreatedOnToolsVersion = 14.1;
+					};
+				};
+			};
+			buildConfigurationList = 03E19A84291DEC2B001FFD81 /* Build configuration list for PBXProject "dock shortcut" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = 03E19A80291DEC2B001FFD81;
+			productRefGroup = 03E19A8A291DEC2B001FFD81 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				03E19A88291DEC2B001FFD81 /* dock shortcut */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		03E19A87291DEC2B001FFD81 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03E19A94291DEC2C001FFD81 /* Preview Assets.xcassets in Resources */,
+				03BF2FF329582C6500AB63AE /* Localizable.strings in Resources */,
+				03E19A91291DEC2C001FFD81 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		03E19A85291DEC2B001FFD81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03BF2FF029581DC500AB63AE /* LabeledHStack.swift in Sources */,
+				03025A792955B102008A0483 /* DockTile.swift in Sources */,
+				03025A772955A371008A0483 /* dock_shortcutApp.swift in Sources */,
+				03BF2FFA295879BF00AB63AE /* Updater.swift in Sources */,
+				03025A742955383D008A0483 /* AppDelegate.swift in Sources */,
+				03E19A8F291DEC2B001FFD81 /* ContentView.swift in Sources */,
+				03BF2FF829585C7800AB63AE /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		03BF2FF529582C6500AB63AE /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03BF2FF429582C6500AB63AE /* en */,
+				03BF2FF629582C6F00AB63AE /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		03E19A96291DEC2C001FFD81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		03E19A97291DEC2C001FFD81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		03E19A99291DEC2C001FFD81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "dock shortcut/dock_shortcut.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"dock shortcut/Preview Content\"";
+				DEVELOPMENT_TEAM = MD2Y658336;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "dock-shortcut-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Dock Shortcut";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yige.dock-shortcut";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		03E19A9A291DEC2C001FFD81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "dock shortcut/dock_shortcut.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"dock shortcut/Preview Content\"";
+				DEVELOPMENT_TEAM = MD2Y658336;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "dock-shortcut-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Dock Shortcut";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yige.dock-shortcut";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		03E19A84291DEC2B001FFD81 /* Build configuration list for PBXProject "dock shortcut" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03E19A96291DEC2C001FFD81 /* Debug */,
+				03E19A97291DEC2C001FFD81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03E19A98291DEC2C001FFD81 /* Build configuration list for PBXNativeTarget "dock shortcut" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03E19A99291DEC2C001FFD81 /* Debug */,
+				03E19A9A291DEC2C001FFD81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 03E19A81291DEC2B001FFD81 /* Project object */;
+}

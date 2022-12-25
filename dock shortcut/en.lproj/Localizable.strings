@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  dock shortcut
+
+  Created by yige on 2022/12/25.
+  
+*/
+CFBundleDisplayName = "Dock Shortcut";
+setting = "Setting";
+settingLaunchTitle = "Launch:";
+settingLaunchContent = "Start at login";
+settingMenuBarTitle = "Menu bar:";
+settingMenuBarContent = "Show menu bar icon";
+settingOptionTitle = "Option:";
+settingOptionContent = "Finder is first application";
+settingHotKeyTitle = "HotKey:";
+settingHotKeyContent = "Number";
+settingIssues = "Issues";
+quit = "Quit";
+menuCheckUpdate = "Check for update";
+networkError = "Connection Invalid";
+updateNone = "No updates";
+ignore = "Ignore";
+checkedUpdateNewVersion = "Found new version";
+goToDownload = "Download";
+button-ok = "Ok";
