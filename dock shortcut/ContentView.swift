@@ -8,10 +8,6 @@
 import SwiftUI
 import LaunchAtLogin
 
-enum ShotcutOption: String {
-    case control, cmd, shift, option, alpha
-}
-
 struct ContentView: View {
     @AppStorage("preference_showMenuBarIcon") var showMenuBarIcon = true
     @AppStorage("preference_finderIsFirstApp") var finderIsFirstApp = true
@@ -39,7 +35,9 @@ struct ContentView: View {
                             }
                         }
                         LabeledContent(settingOptionTitle) {
-                            Toggle(settingOptionContent, isOn: $finderIsFirstApp)
+                            Toggle(settingOptionContent, isOn: $finderIsFirstApp).onChange(of: finderIsFirstApp) { value in
+                                globalFinderIsFirstApp = value
+                            }
                         }
                     } else {
                         LabeledHStack(settingLaunchTitle) {
@@ -53,7 +51,9 @@ struct ContentView: View {
                             }
                         }
                         LabeledHStack(settingOptionTitle) {
-                            Toggle(settingOptionContent, isOn: $finderIsFirstApp)
+                            Toggle(settingOptionContent, isOn: $finderIsFirstApp).onChange(of: finderIsFirstApp) { value in
+                                globalFinderIsFirstApp = value
+                            }
                         }
                     }
                     
@@ -65,6 +65,12 @@ struct ContentView: View {
                         Text("Shift + " + NSLocalizedString("settingHotKeyContent", comment: "Number")).tag(ShotcutOption.shift.rawValue)
                     }
                     .pickerStyle(.radioGroup)
+                    .onChange(of: shotcutOption) { value in
+                        for hotKeyRef in hotKeyRefs {
+                            Hotkey.Unregister(hotKeyRef: hotKeyRef)
+                        }
+                        initHotKey(cocoaFlagsStr: ShotcutOption(rawValue: value) ?? ShotcutOption.option)
+                    }
                 }.padding()
                     .frame(minWidth: 200)
                 

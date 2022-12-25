@@ -24,3 +24,5 @@ ignore = "Ignore";
 checkedUpdateNewVersion = "Found new version";
 goToDownload = "Download";
 button-ok = "Ok";
+warning = "Warning";
+registerHotKeyErr = "Hotkey conflict, failed to register shortcut keys";

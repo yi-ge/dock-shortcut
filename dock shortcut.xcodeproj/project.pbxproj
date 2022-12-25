@@ -15,6 +15,7 @@
 		03BF2FF829585C7800AB63AE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF2FF729585C7800AB63AE /* Utils.swift */; };
 		03BF2FFA295879BF00AB63AE /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF2FF9295879BF00AB63AE /* Updater.swift */; };
 		03BF2FFD2958804E00AB63AE /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 03BF2FFC2958804E00AB63AE /* LaunchAtLogin */; };
+		03BF30002958866800AB63AE /* Hotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF2FFF2958866800AB63AE /* Hotkey.swift */; };
 		03E19A8F291DEC2B001FFD81 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E19A8E291DEC2B001FFD81 /* ContentView.swift */; };
 		03E19A91291DEC2C001FFD81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E19A90291DEC2C001FFD81 /* Assets.xcassets */; };
 		03E19A94291DEC2C001FFD81 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E19A93291DEC2C001FFD81 /* Preview Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		03BF2FF629582C6F00AB63AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		03BF2FF729585C7800AB63AE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		03BF2FF9295879BF00AB63AE /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		03BF2FFF2958866800AB63AE /* Hotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotkey.swift; sourceTree = "<group>"; };
 		03E19A89291DEC2B001FFD81 /* dock shortcut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "dock shortcut.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E19A8E291DEC2B001FFD81 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		03E19A90291DEC2C001FFD81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				03E19A92291DEC2C001FFD81 /* Preview Content */,
 				03BF2FF729585C7800AB63AE /* Utils.swift */,
 				03BF2FF9295879BF00AB63AE /* Updater.swift */,
+				03BF2FFF2958866800AB63AE /* Hotkey.swift */,
 			);
 			path = "dock shortcut";
 			sourceTree = "<group>";
@@ -124,7 +127,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					03E19A88291DEC2B001FFD81 = {
 						CreatedOnToolsVersion = 14.1;
@@ -195,6 +198,7 @@
 				03BF2FF029581DC500AB63AE /* LabeledHStack.swift in Sources */,
 				03025A792955B102008A0483 /* DockTile.swift in Sources */,
 				03025A772955A371008A0483 /* dock_shortcutApp.swift in Sources */,
+				03BF30002958866800AB63AE /* Hotkey.swift in Sources */,
 				03BF2FFA295879BF00AB63AE /* Updater.swift in Sources */,
 				03025A742955383D008A0483 /* AppDelegate.swift in Sources */,
 				03E19A8F291DEC2B001FFD81 /* ContentView.swift in Sources */,
@@ -221,6 +225,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -250,6 +255,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -281,6 +287,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -310,6 +317,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -336,9 +344,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "dock shortcut/dock_shortcut.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"dock shortcut/Preview Content\"";
 				DEVELOPMENT_TEAM = MD2Y658336;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -368,9 +379,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "dock shortcut/dock_shortcut.entitlements";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"dock shortcut/Preview Content\"";
 				DEVELOPMENT_TEAM = MD2Y658336;
 				ENABLE_HARDENED_RUNTIME = YES;

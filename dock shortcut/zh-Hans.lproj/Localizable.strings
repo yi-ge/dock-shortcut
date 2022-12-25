@@ -24,3 +24,5 @@ ignore = "忽略";
 checkedUpdateNewVersion = "找到新版本";
 goToDownload = "前往下载";
 button-ok = "确定";
+warning = "警告";
+registerHotKeyErr = "热键冲突，注册快捷键失败";
