@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import LaunchAtLogin
 
 enum ShotcutOption: String {
     case control, cmd, shift, option, alpha
 }
 
 struct ContentView: View {
-    @AppStorage("preference_startAtLogin") var startAtLogin = true
     @AppStorage("preference_showMenuBarIcon") var showMenuBarIcon = true
     @AppStorage("preference_finderIsFirstApp") var finderIsFirstApp = true
     @AppStorage("preference_shotcutOption") var shotcutOption: String = ShotcutOption.option.rawValue
@@ -29,10 +29,8 @@ struct ContentView: View {
                 Form {
                     if #available(macOS 13.0, *) {
                         LabeledContent(settingLaunchTitle) {
-                            Toggle(isOn: $startAtLogin) {
+                            LaunchAtLogin.Toggle {
                                 Text(settingLaunchContent)
-                            }.onChange(of: startAtLogin) { value in
-                                
                             }
                         }
                         LabeledContent(settingMenuBarTitle) {
@@ -41,11 +39,13 @@ struct ContentView: View {
                             }
                         }
                         LabeledContent(settingOptionTitle) {
-                            Toggle(settingOptionContent, isOn: $startAtLogin)
+                            Toggle(settingOptionContent, isOn: $finderIsFirstApp)
                         }
                     } else {
                         LabeledHStack(settingLaunchTitle) {
-                            Toggle(settingLaunchContent, isOn: $startAtLogin)
+                            LaunchAtLogin.Toggle {
+                                Text(settingLaunchContent)
+                            }
                         }
                         LabeledHStack(settingMenuBarTitle) {
                             Toggle(settingMenuBarContent, isOn: $showMenuBarIcon).onChange(of: showMenuBarIcon) { value in
@@ -53,7 +53,7 @@ struct ContentView: View {
                             }
                         }
                         LabeledHStack(settingOptionTitle) {
-                            Toggle(settingOptionContent, isOn: $startAtLogin)
+                            Toggle(settingOptionContent, isOn: $finderIsFirstApp)
                         }
                     }
                     

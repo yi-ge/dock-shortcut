@@ -14,7 +14,7 @@ class Updater {
     
     init(user: String) {
         self.user = user
-        let proName = "dock-shortcut"// Bundle.main.infoDictionary!["CFBundleExecutable"]!
+        let proName = "dock-shortcut" // Bundle.main.infoDictionary!["CFBundleExecutable"]!
         self.url = URL(string: "https://raw.githubusercontent.com/\(user)/\(proName)/master/\(proName)/Info.plist")
     }
     
@@ -31,7 +31,7 @@ class Updater {
             callback()
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode != 200 {
-                    // :TODO 加日志
+                    // TODO 加日志
                     tipInfo(withTitle: NSLocalizedString("menuCheckUpdate", comment: "Check for update"),
                             withMessage: NSLocalizedString("networkError", comment: "Connection Invalid"))
                     return
@@ -56,7 +56,7 @@ class Updater {
                             }
                     }
                 } catch {
-                    // :TODO 加日志
+                    // TODO 加日志
                     print("Error reading plist: \(error), format: \(propertyListForamt)")
                 }
             }
