@@ -26,3 +26,6 @@ goToDownload = "Download";
 button-ok = "Ok";
 warning = "Warning";
 registerHotKeyErr = "Hotkey conflict, failed to register shortcut keys";
+hiddenSetting = "Hide settings window";
+settingMenuBarNotice = "If you choose to hide the menu bar icon, you can open this settings window by launching the application again.";
+settingOptionNotice = "When this option is checked, 'shortcut + 1' is used to open the Finder App.";

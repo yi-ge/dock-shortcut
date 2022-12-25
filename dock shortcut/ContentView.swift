@@ -22,6 +22,8 @@ struct ContentView: View {
                 let settingMenuBarContent = NSLocalizedString("settingMenuBarContent", comment: "Show menu bar icon")
                 let settingOptionTitle = NSLocalizedString("settingOptionTitle", comment: "Option:")
                 let settingOptionContent = NSLocalizedString("settingOptionContent", comment: "Finder is first application")
+                let settingMenuBarNotice = NSLocalizedString("settingMenuBarNotice", comment: "setting menuBar notice")
+                let settingOptionNotice = NSLocalizedString("settingOptionNotice", comment: "setting option notice")
                 Form {
                     if #available(macOS 13.0, *) {
                         LabeledContent(settingLaunchTitle) {
@@ -34,11 +36,24 @@ struct ContentView: View {
                                 statusBarItem.isVisible = showMenuBarIcon
                             }
                         }
+                        
+                        Text(settingMenuBarNotice)
+                            .allowsTightening(false)
+                            .font(.system(size: 12, weight: .light))
+                            .foregroundColor(.gray)
+                            .fixedSize(horizontal: false, vertical: true)
+                        
                         LabeledContent(settingOptionTitle) {
                             Toggle(settingOptionContent, isOn: $finderIsFirstApp).onChange(of: finderIsFirstApp) { value in
                                 globalFinderIsFirstApp = value
                             }
                         }
+                        
+                        Text(settingOptionNotice)
+                            .allowsTightening(false)
+                            .font(.system(size: 12, weight: .light))
+                            .foregroundColor(.gray)
+                            .fixedSize(horizontal: false, vertical: true)
                     } else {
                         LabeledHStack(settingLaunchTitle) {
                             LaunchAtLogin.Toggle {
@@ -50,11 +65,24 @@ struct ContentView: View {
                                 statusBarItem.isVisible = showMenuBarIcon
                             }
                         }
+                        
+                        Text(settingMenuBarNotice)
+                            .allowsTightening(false)
+                            .font(.system(size: 12, weight: .light))
+                            .foregroundColor(.gray)
+                            .fixedSize(horizontal: false, vertical: true)
+                        
                         LabeledHStack(settingOptionTitle) {
                             Toggle(settingOptionContent, isOn: $finderIsFirstApp).onChange(of: finderIsFirstApp) { value in
                                 globalFinderIsFirstApp = value
                             }
                         }
+                        
+                        Text(settingOptionNotice)
+                            .allowsTightening(false)
+                            .font(.system(size: 12, weight: .light))
+                            .foregroundColor(.gray)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     
                     
@@ -84,8 +112,14 @@ struct ContentView: View {
                 Text("v" + getLocalVersion())
                 Spacer()
                 
-                Button(NSLocalizedString("quit", comment: "Quit") + " " + NSLocalizedString("CFBundleDisplayName", comment: "Dock Shortcut")){
-                    NSApplication.shared.terminate(self)
+                HStack {
+                    Button(NSLocalizedString("quit", comment: "Quit") + " " + NSLocalizedString("CFBundleDisplayName", comment: "Dock Shortcut")){
+                        NSApplication.shared.terminate(self)
+                    }
+                    
+                    Button(NSLocalizedString("hiddenSetting", comment: "Hide Setting Window")){
+                        NSApplication.shared.hide(self)
+                    }
                 }
             }
             .padding()
@@ -93,7 +127,7 @@ struct ContentView: View {
                 Label(NSLocalizedString("setting", comment: "Setting"), systemImage: "sun.min")
             }
         }
-        .frame(width: 440, height: 350)
+        .frame(width: 440, height: 370)
     }
 }
 

@@ -14,7 +14,7 @@ struct dock_shortcutApp: App {
         WindowGroup {
             ContentView()
                 .frame(minWidth: 470, idealWidth: 480, maxWidth: .infinity,
-                                minHeight: 370, idealHeight: 380, maxHeight: .infinity,
+                                minHeight: 440, idealHeight: 460, maxHeight: .infinity,
                                 alignment: .center)
         }
     }

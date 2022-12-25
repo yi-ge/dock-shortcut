@@ -5,7 +5,7 @@
   Created by yige on 2022/12/25.
   
 */
-CFBundleDisplayName = "Dock快捷键";
+CFBundleDisplayName = "Dock Shortcut";
 setting = "设置";
 settingLaunchTitle = "启动：";
 settingLaunchContent = "登录时启动应用";
@@ -26,3 +26,6 @@ goToDownload = "前往下载";
 button-ok = "确定";
 warning = "警告";
 registerHotKeyErr = "热键冲突，注册快捷键失败";
+hiddenSetting = "隐藏设置界面";
+settingMenuBarNotice = "如果您选择隐藏菜单栏图标，可以通过再次启动应用的方式打开此设置窗口。";
+settingOptionNotice = "勾选此选项后，快捷键+1 用作打开访达APP。";
