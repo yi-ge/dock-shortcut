@@ -16,7 +16,7 @@ Use the hotkeys to open the application in the dock. `option + 1` opens the 1st 
 
 ## Install
 
-Download the latest version of the application from <https://github.com/yi-ge/file-sync/releases>.
+Download the latest version of the application from <https://github.com/yi-ge/dock-shortcut/releases>.
 
 ## Tips
 

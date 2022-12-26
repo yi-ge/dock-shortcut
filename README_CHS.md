@@ -16,7 +16,7 @@
 
 ## 安装
 
-从 <https://github.com/yi-ge/file-sync/releases> 下载最新版的应用程序。
+从 <https://github.com/yi-ge/dock-shortcut/releases> 下载最新版的应用程序。
 
 ## 使用技巧
 

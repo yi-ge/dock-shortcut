@@ -15,7 +15,7 @@ class Updater {
     init(user: String) {
         self.user = user
         let proName = "dock-shortcut" // Bundle.main.infoDictionary!["CFBundleExecutable"]!
-        self.url = URL(string: "https://raw.githubusercontent.com/\(user)/\(proName)/master/\(proName)/Info.plist")
+        self.url = URL(string: "https://raw.githubusercontent.com/\(user)/\(proName)/master/dock-shortcut-Info.plist")
     }
     
     func check(callback: @escaping (()->Void)) {
