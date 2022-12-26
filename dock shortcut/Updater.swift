@@ -15,7 +15,7 @@ class Updater {
     init(user: String) {
         self.user = user
         let proName = "dock-shortcut" // Bundle.main.infoDictionary!["CFBundleExecutable"]!
-        self.url = URL(string: "https://raw.githubusercontent.com/\(user)/\(proName)/master/Info.plist")
+        self.url = URL(string: "https://raw.githubusercontent.com/\(user)/\(proName)/master/dock-shortcut-Info.plist")
     }
     
     func check(callback: @escaping (()->Void)) {
@@ -51,7 +51,7 @@ class Updater {
                             withMessage: NSLocalizedString("checkedUpdateNewVersion", comment: "Found new version") + " v\(latestVersion)",
                         oKButtonTitle: NSLocalizedString("goToDownload", comment: "Download"),
                         cancelButtonTitle: NSLocalizedString("ignore", comment: "Ignore")) {
-                            if let url = URL(string: "https://github.com/\(self.user)/\(Bundle.main.infoDictionary!["CFBundleExecutable"]!)/releases/tag/v" + latestVersion) {
+                            if let url = URL(string: "https://github.com/\(self.user)/dock-shortcut/releases/tag/v" + latestVersion) {
                                 NSWorkspace.shared.open(url)
                             }
                     }
