@@ -45,9 +45,9 @@ func openAPP(bundleIdentifier: String) {
         lastOpen = bundleIdentifier
         guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleIdentifier) else { return }
         
-        let path = "/bin"
+//        let path = "/bin"
         let configuration = NSWorkspace.OpenConfiguration()
-        configuration.arguments = [path]
+//        configuration.arguments = [path]
         NSWorkspace.shared.openApplication(at: url,
                                            configuration: configuration,
                                            completionHandler: nil)
@@ -126,24 +126,38 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var plist = [String:AnyObject]()
     var window: NSWindow?
     
-    func applicationDidFinishLaunching(_: Notification) {
-        window = NSApplication.shared.windows.first
-        window?.title = NSLocalizedString("CFBundleDisplayName", comment: "Dock Shortcut")
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // 获取应用程序启动选项
+        guard let options = aNotification.userInfo else {
+            // 如果无法获取启动选项，则假定应用程序是从用户主动点击启动的
+            print("Application launched by user.")
+            return
+        }
         
-        
-        statusBarItem = NSStatusBar.system.statusItem(
-            withLength: NSStatusItem.squareLength)
-        
-        if let showMenuBarIcon = UserDefaults.standard.string(forKey: "preference_showMenuBarIcon") {
-            if window != nil && showMenuBarIcon == "1" {
+        // 检查启动选项中是否包含 NSApplicationLaunchUserNotificationKey 键
+        if let isUserNotification = options[NSApplication.launchUserNotificationUserInfoKey] as? Bool, isUserNotification {
+            print("Application launched from a user notification.")
+            window?.close() // Close main app window
+        } else {
+            print("Application launched by user.")
+            window = NSApplication.shared.windows.first
+            window?.title = NSLocalizedString("CFBundleDisplayName", comment: "Dock Shortcut")
+            
+            
+            statusBarItem = NSStatusBar.system.statusItem(
+                withLength: NSStatusItem.squareLength)
+            
+            if let showMenuBarIcon = UserDefaults.standard.string(forKey: "preference_showMenuBarIcon") {
+                if window != nil && showMenuBarIcon == "1" {
+                    window?.close() // Close main app window
+                }
+                
+                if showMenuBarIcon == "0" {
+                    statusBarItem.isVisible = false
+                }
+            } else if window != nil {
                 window?.close() // Close main app window
             }
-            
-            if showMenuBarIcon == "0" {
-                statusBarItem.isVisible = false
-            }
-        } else if window != nil {
-            window?.close() // Close main app window
         }
         
         if let finderIsFirstApp = UserDefaults.standard.string(forKey: "preference_finderIsFirstApp") {
@@ -205,7 +219,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 })
             }
         }
-        
         
         if let shotcutOption = UserDefaults.standard.string(forKey: "preference_shotcutOption") {
             initHotKey(cocoaFlagsStr: ShotcutOption(rawValue: shotcutOption) ?? ShotcutOption.option)
