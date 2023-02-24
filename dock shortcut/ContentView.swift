@@ -117,6 +117,10 @@ struct ContentView: View {
                         NSApplication.shared.terminate(self)
                     }
                     
+                    Button(NSLocalizedString("menuCheckUpdate", comment: "Check for update")){
+                        Updater.share.check {}
+                    }
+                    
                     Button(NSLocalizedString("hiddenSetting", comment: "Hide Setting Window")){
                         NSApplication.shared.hide(self)
                     }

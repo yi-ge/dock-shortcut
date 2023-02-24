@@ -41,7 +41,7 @@ class Updater {
                     let infoPlist = try PropertyListSerialization.propertyList(from: data!, options: PropertyListSerialization.ReadOptions.mutableContainersAndLeaves, format: &propertyListForamt) as! [String: AnyObject]
                     let latestVersion = infoPlist["CFBundleShortVersionString"] as! String
                     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-                    if latestVersion == appVersion {
+                    if latestVersion <= appVersion {
                         tipInfo(withTitle: NSLocalizedString("menuCheckUpdate", comment: "Check for update"),
                                 withMessage: NSLocalizedString("updateNone", comment: "No updates"))
                         return
