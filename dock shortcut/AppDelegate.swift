@@ -148,12 +148,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 withLength: NSStatusItem.squareLength)
             
             if let showMenuBarIcon = UserDefaults.standard.string(forKey: "preference_showMenuBarIcon") {
-                if window != nil && showMenuBarIcon == "1" {
-                    window?.close() // Close main app window
-                }
-                
                 if showMenuBarIcon == "0" {
                     statusBarItem.isVisible = false
+                }
+                
+                if window != nil {
+                    window?.close() // Close main app window
                 }
             } else if window != nil {
                 window?.close() // Close main app window
