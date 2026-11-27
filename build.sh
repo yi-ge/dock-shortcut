@@ -14,7 +14,11 @@ helper="$app/Contents/Library/LoginItems/LaunchAtLoginHelper.app"
 
 for bundle in "$app" "$helper"; do
     executable="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$bundle/Contents/Info.plist")"
-    /usr/bin/xcrun lipo "$bundle/Contents/MacOS/$executable" -verify_arch arm64 x86_64
+    architectures="$(/usr/bin/xcrun lipo -archs "$bundle/Contents/MacOS/$executable")"
+    if [[ "$architectures" != 'x86_64 arm64' && "$architectures" != 'arm64 x86_64' ]]; then
+        printf 'Expected a universal binary for %s, found %s.\n' "$executable" "$architectures" >&2
+        exit 1
+    fi
 done
 
 sign_args=(--force --options runtime --sign "${MACOS_SIGN_IDENTITY:--}")
