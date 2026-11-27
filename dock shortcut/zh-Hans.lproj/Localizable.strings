@@ -29,3 +29,4 @@ registerHotKeyErr = "热键冲突，注册快捷键失败";
 hiddenSetting = "隐藏设置界面";
 settingMenuBarNotice = "如果您选择隐藏菜单栏图标，可以通过再次启动应用的方式打开此设置窗口。";
 settingOptionNotice = "勾选此选项后，快捷键+1 用作打开访达APP。";
+openLoginItemSettings = "打开登录项设置";

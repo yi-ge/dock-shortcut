@@ -20,5 +20,7 @@
 
 ## 使用技巧
 
-- 用 `option + 数字（1-9）` 打开/隐藏 Dock对应的程序
+- 用 `Option + 1` 到 `Option + 0` 打开或隐藏 Dock 中对应的应用。调整 Dock 中的应用顺序后，快捷键会随之更新。
+- 如果 macOS 要求批准登录时启动，可在 Dock Shortcut 设置中点击按钮，打开系统登录项设置。
+- 隐藏菜单栏图标后，可在 Finder 中再次打开 Dock Shortcut，显示设置窗口。
 - MacOS系统显示和隐藏Dock栏的快捷键是 `option + command + d`

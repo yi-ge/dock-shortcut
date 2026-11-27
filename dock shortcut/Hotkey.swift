@@ -6,83 +6,83 @@
 //
 
 import Carbon
-import AppKit
 
-extension String {
-    /// This converts string to UInt as a fourCharCode
-    public var fourCharCodeValue: Int {
-        var result: Int = 0
-        if let data = self.data(using: String.Encoding.macOSRoman) {
-            data.withUnsafeBytes({ (rawBytes) in
-                let bytes = rawBytes.bindMemory(to: UInt8.self)
-                for i in 0 ..< data.count {
-                    result = result << 8 + Int(bytes[i])
-                }
-            })
+enum ShortcutModifier: String {
+    case control, cmd, shift, option, alpha
+
+    var carbonFlags: UInt32 {
+        switch self {
+        case .control: return UInt32(controlKey)
+        case .cmd: return UInt32(cmdKey)
+        case .shift: return UInt32(shiftKey)
+        case .option: return UInt32(optionKey)
+        case .alpha: return UInt32(alphaLock)
         }
-        return result
     }
 }
 
-class Hotkey {
-    static
-    func getCarbonFlagsFromCocoaFlags(cocoaFlags: NSEvent.ModifierFlags) -> UInt32 {
-        let flags = cocoaFlags.rawValue
-        var newFlags: Int = 0
-        
-        if ((flags & NSEvent.ModifierFlags.control.rawValue) > 0) {
-            newFlags |= controlKey
-        }
-        
-        if ((flags & NSEvent.ModifierFlags.command.rawValue) > 0) {
-            newFlags |= cmdKey
-        }
-        
-        if ((flags & NSEvent.ModifierFlags.shift.rawValue) > 0) {
-            newFlags |= shiftKey;
-        }
-        
-        if ((flags & NSEvent.ModifierFlags.option.rawValue) > 0) {
-            newFlags |= optionKey
-        }
-        
-        if ((flags & NSEvent.ModifierFlags.capsLock.rawValue) > 0) {
-            newFlags |= alphaLock
-        }
-        
-        return UInt32(newFlags);
-    }
-    
-    static func register(keyCode: Int, cocoaFlags: NSEvent.ModifierFlags) -> EventHotKeyRef! {
-        var hotKeyRef: EventHotKeyRef?
-        let modifierFlags: UInt32 =
-        getCarbonFlagsFromCocoaFlags(cocoaFlags: cocoaFlags)
-        
-        var gMyHotKeyID = EventHotKeyID()
-        
-        gMyHotKeyID.id = UInt32(keyCode)
-        
-        // Not sure what "swat" vs "htk1" do.
-        gMyHotKeyID.signature = OSType("swat".fourCharCodeValue)
-        // gMyHotKeyID.signature = OSType("htk1".fourCharCodeValue)
-        
-        // Register hotkey.
-        let status = RegisterEventHotKey(UInt32(keyCode),
-                                         modifierFlags,
-                                         gMyHotKeyID,
-                                         GetApplicationEventTarget(),
-                                         0,
-                                         &hotKeyRef)
-        
-        if status != noErr {
-            tipInfo(withTitle: NSLocalizedString("warning", comment: "Warning"),
-                    withMessage: NSLocalizedString("registerHotKeyErr", comment: "Hotkey conflict, failed to register shortcut keys"))
-        }
+final class Hotkey {
+    private static let signature: OSType = 0x44534354 // DSCT
+    private static let keyCodes = [
+        kVK_ANSI_1, kVK_ANSI_2, kVK_ANSI_3, kVK_ANSI_4, kVK_ANSI_5,
+        kVK_ANSI_6, kVK_ANSI_7, kVK_ANSI_8, kVK_ANSI_9, kVK_ANSI_0,
+    ]
+    static var count: Int { keyCodes.count }
 
-        return hotKeyRef
+    private let onKey: @MainActor (Int) -> Void
+    private var handler: EventHandlerRef?
+    private var registrations: [EventHotKeyRef] = []
+
+    init(onKey: @escaping @MainActor (Int) -> Void) {
+        self.onKey = onKey
     }
-    
-    static func Unregister(hotKeyRef: EventHotKeyRef) {
-        UnregisterEventHotKey(hotKeyRef);
+
+    @MainActor
+    func register(_ modifier: ShortcutModifier) -> Int {
+        invalidate()
+        var type = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyReleased))
+        let result = InstallEventHandler(
+            GetApplicationEventTarget(),
+            { _, event, context in
+                guard let event, let context else { return OSStatus(eventNotHandledErr) }
+                var id = EventHotKeyID()
+                let status = GetEventParameter(
+                    event, EventParamName(kEventParamDirectObject), EventParamType(typeEventHotKeyID),
+                    nil, MemoryLayout<EventHotKeyID>.size, nil, &id
+                )
+                let slot = Int(id.id)
+                guard status == noErr, id.signature == Hotkey.signature, Hotkey.keyCodes.indices.contains(slot) else {
+                    return OSStatus(eventNotHandledErr)
+                }
+                let callback = Unmanaged<Hotkey>.fromOpaque(context).takeUnretainedValue().onKey
+                DispatchQueue.main.async { callback(slot) }
+                return OSStatus(noErr)
+            },
+            1, &type, Unmanaged.passUnretained(self).toOpaque(), &handler
+        )
+        guard result == noErr else { return 0 }
+
+        for (slot, keyCode) in Self.keyCodes.enumerated() {
+            var registration: EventHotKeyRef?
+            let id = EventHotKeyID(signature: Self.signature, id: UInt32(slot))
+            if RegisterEventHotKey(
+                UInt32(keyCode), modifier.carbonFlags, id, GetApplicationEventTarget(), 0, &registration
+            ) == noErr, let registration {
+                registrations.append(registration)
+            }
+        }
+        return registrations.count
+    }
+
+    @MainActor
+    func invalidate() {
+        for registration in registrations {
+            UnregisterEventHotKey(registration)
+        }
+        registrations.removeAll()
+        if let handler {
+            RemoveEventHandler(handler)
+            self.handler = nil
+        }
     }
 }
