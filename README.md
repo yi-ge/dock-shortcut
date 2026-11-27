@@ -20,5 +20,7 @@ Download the latest version of the application from <https://github.com/yi-ge/do
 
 ## Tips
 
-- Use `option + number (1-9)` to open/hide the program corresponding to the Dock
+- Use `Option + 1` through `Option + 0` to open or hide the corresponding Dock app. Reordering apps in the Dock updates the shortcuts.
+- If macOS asks you to approve Launch at Login, use the button in Dock Shortcut settings to open the system login item settings.
+- If you hide the menu bar icon, open Dock Shortcut again from Finder to show its settings.
 - The shortcut to show and hide the Dock bar on MacOS is `option + command + d`

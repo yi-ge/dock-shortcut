@@ -5,17 +5,18 @@
 //  Created by yige on 2022/12/25.
 //
 
-import SwiftUI
+import AppKit
 
 @main
-struct dock_shortcutApp: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .frame(minWidth: 470, idealWidth: 480, maxWidth: .infinity,
-                                minHeight: 440, idealHeight: 460, maxHeight: .infinity,
-                                alignment: .center)
+struct DockShortcutApp {
+    @MainActor
+    static func main() {
+        let application = NSApplication.shared
+        let delegate = AppDelegate()
+        application.setActivationPolicy(.accessory)
+        application.delegate = delegate
+        withExtendedLifetime(delegate) {
+            application.run()
         }
     }
 }

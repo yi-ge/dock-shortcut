@@ -4,62 +4,87 @@
 
 import Cocoa
 
+@MainActor
+final class Updater {
+    static let shared = Updater()
+    private let apiURL = URL(string: "https://api.github.com/repos/yi-ge/dock-shortcut/releases/latest")!
+    private let releasesURL = URL(string: "https://github.com/yi-ge/dock-shortcut/releases")!
 
-class Updater {
-    
-    private let url: URL?
-    private let user: String
-    
-    static let share = Updater(user: "yi-ge")
-    
-    init(user: String) {
-        self.user = user
-        let proName = "dock-shortcut" // Bundle.main.infoDictionary!["CFBundleExecutable"]!
-        self.url = URL(string: "https://raw.githubusercontent.com/\(user)/\(proName)/master/dock-shortcut-Info.plist")
-    }
-    
-    func check(callback: @escaping (()->Void)) {
-        let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: self.url!) { (data, response, error) in
-            self.checkUpdateRequestSuccess(data: data, response: response, error: error, callback: callback)
+    private struct Release: Decodable {
+        let tagName: String
+
+        enum CodingKeys: String, CodingKey {
+            case tagName = "tag_name"
         }
-        task.resume()
     }
-    
-    private func checkUpdateRequestSuccess(data:Data?, response:URLResponse?, error:Error?, callback: @escaping (()->Void)) -> Void {
-        DispatchQueue.main.async {
-            callback()
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode != 200 {
-                    // TODO 加日志
-                    tipInfo(withTitle: NSLocalizedString("menuCheckUpdate", comment: "Check for update"),
-                            withMessage: NSLocalizedString("networkError", comment: "Connection Invalid"))
-                    return
-                }
-                var propertyListForamt = PropertyListSerialization.PropertyListFormat.xml
-                do {
-                    let infoPlist = try PropertyListSerialization.propertyList(from: data!, options: PropertyListSerialization.ReadOptions.mutableContainersAndLeaves, format: &propertyListForamt) as! [String: AnyObject]
-                    let latestVersion = infoPlist["CFBundleShortVersionString"] as! String
-                    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-                    if latestVersion <= appVersion {
-                        tipInfo(withTitle: NSLocalizedString("menuCheckUpdate", comment: "Check for update"),
-                                withMessage: NSLocalizedString("updateNone", comment: "No updates"))
-                        return
-                    }
-                    
-                    tipInfo(withTitle: NSLocalizedString("menuCheckUpdate", comment: "Check for update"),
-                            withMessage: NSLocalizedString("checkedUpdateNewVersion", comment: "Found new version") + " v\(latestVersion)",
-                        oKButtonTitle: NSLocalizedString("goToDownload", comment: "Download"),
-                        cancelButtonTitle: NSLocalizedString("ignore", comment: "Ignore")) {
-                            if let url = URL(string: "https://github.com/\(self.user)/dock-shortcut/releases/tag/v" + latestVersion) {
-                                NSWorkspace.shared.open(url)
-                            }
-                    }
-                } catch {
-                    // TODO 加日志
-                    print("Error reading plist: \(error), format: \(propertyListForamt)")
+
+    func check() {
+        var request = URLRequest(url: apiURL)
+        request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+        URLSession.shared.dataTask(with: request) { data, response, _ in
+            let response = response as? HTTPURLResponse
+            let status = response?.statusCode
+            let rateLimited = status == 429 || (status == 403 && (
+                response?.value(forHTTPHeaderField: "X-RateLimit-Remaining") == "0" ||
+                response?.value(forHTTPHeaderField: "Retry-After") != nil
+            ))
+            let release = status == 200 ? data.flatMap { try? JSONDecoder().decode(Release.self, from: $0) } : nil
+            DispatchQueue.main.async {
+                if rateLimited {
+                    self.checkLatestReleasePage()
+                } else {
+                    self.showResult(tag: release?.tagName)
                 }
             }
+        }.resume()
+    }
+
+    private func checkLatestReleasePage() {
+        let tagDirectory = releasesURL.appendingPathComponent("tag", isDirectory: true)
+        var request = URLRequest(url: releasesURL.appendingPathComponent("latest"))
+        request.httpMethod = "HEAD"
+        URLSession.shared.dataTask(with: request) { _, response, _ in
+            let response = response as? HTTPURLResponse
+            let url = response?.url
+            let tag = response?.statusCode == 200 && url?.deletingLastPathComponent() == tagDirectory
+                ? url?.lastPathComponent : nil
+            DispatchQueue.main.async {
+                self.showResult(tag: tag)
+            }
+        }.resume()
+    }
+
+    private func showResult(tag: String?) {
+        let title = NSLocalizedString("menuCheckUpdate", comment: "Check for update")
+        guard let tag, tag.hasPrefix("v"),
+              let latest = Self.versionComponents(String(tag.dropFirst())),
+              let current = Self.versionComponents(getLocalVersion()) else {
+            tipInfo(withTitle: title, withMessage: NSLocalizedString("networkError", comment: "Connection error"))
+            return
         }
+
+        guard latest > current else {
+            tipInfo(withTitle: title, withMessage: NSLocalizedString("updateNone", comment: "No updates"))
+            return
+        }
+
+        tipInfo(
+            withTitle: title,
+            withMessage: NSLocalizedString("checkedUpdateNewVersion", comment: "Found a new version") + " \(tag)",
+            oKButtonTitle: NSLocalizedString("goToDownload", comment: "Download"),
+            cancelButtonTitle: NSLocalizedString("ignore", comment: "Ignore")
+        ) {
+            NSWorkspace.shared.open(releasesURL.appendingPathComponent("tag").appendingPathComponent(tag))
+        }
+    }
+
+    nonisolated static func versionComponents(_ value: String) -> (Int, Int, Int)? {
+        let parts = value.split(separator: ".", omittingEmptySubsequences: false)
+        let components = parts.compactMap { part -> Int? in
+            guard !part.isEmpty, part.utf8.allSatisfy({ (48...57).contains($0) }) else { return nil }
+            return Int(part)
+        }
+        guard (2...3).contains(parts.count), components.count == parts.count else { return nil }
+        return (components[0], components[1], components.count == 3 ? components[2] : 0)
     }
 }
