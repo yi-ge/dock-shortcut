@@ -11,6 +11,8 @@ import ServiceManagement
 import SwiftUI
 
 struct ContentView: View {
+    static let preferredSize = NSSize(width: 556, height: 448)
+
     @AppStorage("preference_showMenuBarIcon") private var showMenuBarIcon = true
     @AppStorage("preference_finderIsFirstApp") private var finderIsFirstApp = true
     @AppStorage("preference_shotcutOption") private var shortcutModifier = ShortcutModifier.option.rawValue
@@ -19,56 +21,112 @@ struct ContentView: View {
     var onShortcutModifierChange: (String) -> Void = { _ in }
     var onHide: () -> Void = {}
 
-    var body: some View {
-        TabView {
-            VStack {
-                Form {
-                    settingRow(NSLocalizedString("settingLaunchTitle", comment: "Launch:")) {
-                        loginItem
-                    }
-                    settingRow(NSLocalizedString("settingMenuBarTitle", comment: "Menu bar:")) {
-                        Toggle(NSLocalizedString("settingMenuBarContent", comment: "Show menu bar icon"), isOn: $showMenuBarIcon)
-                            .onChange(of: showMenuBarIcon, perform: onMenuBarVisibilityChange)
-                    }
-                    notice(NSLocalizedString("settingMenuBarNotice", comment: "Recover settings when the icon is hidden"))
-                    settingRow(NSLocalizedString("settingOptionTitle", comment: "Option:")) {
-                        Toggle(NSLocalizedString("settingOptionContent", comment: "Finder is the first app"), isOn: $finderIsFirstApp)
-                    }
-                    notice(NSLocalizedString("settingOptionNotice", comment: "Finder shortcut behavior"))
-                    Picker(
-                        NSLocalizedString("settingHotKeyTitle", comment: "Hotkey:"),
-                        selection: $shortcutModifier
-                    ) {
-                        let number = NSLocalizedString("settingHotKeyContent", comment: "Number")
-                        Text("Option + \(number)").tag(ShortcutModifier.option.rawValue)
-                        Text("Command + \(number)").tag(ShortcutModifier.cmd.rawValue)
-                        Text("Control + \(number)").tag(ShortcutModifier.control.rawValue)
-                        Text("Shift + \(number)").tag(ShortcutModifier.shift.rawValue)
-                    }
-                    .pickerStyle(.radioGroup)
-                    .onChange(of: shortcutModifier, perform: onShortcutModifierChange)
-                }
-                .padding()
+    private var selectedModifier: ShortcutModifier {
+        ShortcutModifier(rawValue: shortcutModifier) ?? .option
+    }
 
-                Spacer()
-                Link(
-                    NSLocalizedString("settingIssues", comment: "Issues"),
-                    destination: URL(string: "https://github.com/yi-ge/dock-shortcut/issues")!
-                )
-                Text("v" + getLocalVersion())
-                Spacer()
-                HStack {
-                    Button(NSLocalizedString("quit", comment: "Quit")) { NSApp.terminate(nil) }
-                    Button(NSLocalizedString("menuCheckUpdate", comment: "Check for update")) { Updater.shared.check() }
-                    Button(NSLocalizedString("hiddenSetting", comment: "Hide settings window"), action: onHide)
+    var body: some View {
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    header
+                    shortcutSettings
+                    generalSettings
                 }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 20)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding()
-            .tabItem {
-                Label(NSLocalizedString("setting", comment: "Settings"), systemImage: "sun.min")
+
+            Divider()
+            footer
+        }
+        .background(Color(NSColor.windowBackgroundColor))
+        .onChange(of: shortcutModifier, perform: onShortcutModifierChange)
+    }
+
+    private var header: some View {
+        HStack(spacing: 12) {
+            Image(nsImage: NSApplication.shared.applicationIconImage)
+                .resizable()
+                .frame(width: 48, height: 48)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 3) {
+                Text("CFBundleDisplayName")
+                    .font(.system(size: 24, weight: .semibold))
+                Text("settingsDescription")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
             }
         }
-        .frame(width: 480, height: 460)
+        .accessibilityElement(children: .combine)
+    }
+
+    private var shortcutSettings: some View {
+        settingsGroup("shortcutSettings", systemImage: "keyboard") {
+            SettingsRow("settingHotKeyTitle", detail: Text("shortcutNumberHint")) {
+                modifierPicker
+            }
+            Divider().padding(.horizontal, 14)
+            SettingsRow("settingOptionContent", detail: Text(verbatim: finderShortcutDescription)) {
+                Toggle("settingOptionContent", isOn: $finderIsFirstApp)
+                    .labelsHidden()
+                    .toggleStyle(SwitchToggleStyle())
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var modifierPicker: some View {
+        let selection = Binding(
+            get: { selectedModifier },
+            set: { shortcutModifier = $0.rawValue }
+        )
+        let modifiers: [ShortcutModifier] = [.option, .cmd, .control, .shift]
+
+        if selectedModifier == .alpha {
+            Picker("settingHotKeyTitle", selection: selection) {
+                ForEach(modifiers + [.alpha], id: \.self) { modifier in
+                    modifierLabel(modifier)
+                }
+            }
+            .labelsHidden()
+            .pickerStyle(.menu)
+        } else {
+            Picker("settingHotKeyTitle", selection: selection) {
+                ForEach(modifiers, id: \.self) { modifier in
+                    modifierLabel(modifier)
+                }
+            }
+            .labelsHidden()
+            .pickerStyle(.segmented)
+            .frame(width: 335)
+        }
+    }
+
+    private func modifierLabel(_ modifier: ShortcutModifier) -> some View {
+        Text(verbatim: modifier.settingsLabel)
+            .tag(modifier)
+    }
+
+    private var finderShortcutDescription: String {
+        let format = finderIsFirstApp
+            ? NSLocalizedString("finderShortcutOn", comment: "Finder occupies the first shortcut slot")
+            : NSLocalizedString("finderShortcutOff", comment: "The first pinned application occupies the first shortcut slot")
+        return String.localizedStringWithFormat(format, selectedModifier.settingsLabel)
+    }
+
+    private var generalSettings: some View {
+        settingsGroup("generalSettings", systemImage: "gearshape") {
+            loginItem
+            Divider().padding(.horizontal, 14)
+            SettingsRow("settingMenuBarContent", detail: Text("settingMenuBarNotice")) {
+                Toggle("settingMenuBarContent", isOn: $showMenuBarIcon)
+                    .labelsHidden()
+                    .toggleStyle(SwitchToggleStyle())
+                    .onChange(of: showMenuBarIcon, perform: onMenuBarVisibilityChange)
+            }
+        }
     }
 
     @ViewBuilder
@@ -76,26 +134,93 @@ struct ContentView: View {
         if #available(macOS 13.0, *), let bundleIdentifier = Bundle.main.bundleIdentifier {
             LoginItemToggle(service: .loginItem(identifier: bundleIdentifier + "-LaunchAtLoginHelper"))
         } else {
-            LaunchAtLogin.Toggle {
-                Text(NSLocalizedString("settingLaunchContent", comment: "Start at login"))
+            SettingsRow("settingLaunchContent") {
+                LaunchAtLogin.Toggle { Text("settingLaunchContent") }
+                    .labelsHidden()
+                    .toggleStyle(SwitchToggleStyle())
             }
         }
     }
 
-    @ViewBuilder
-    private func settingRow<Content: View>(_ label: String, @ViewBuilder content: @escaping () -> Content) -> some View {
-        if #available(macOS 13.0, *) {
-            LabeledContent(label, content: content)
-        } else {
-            LabeledHStack(label, content: content)
+    private func settingsGroup<Content: View>(
+        _ title: LocalizedStringKey,
+        systemImage: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label(title, systemImage: systemImage)
+                .font(.headline)
+                .accessibilityAddTraits(.isHeader)
+            VStack(spacing: 0, content: content)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color(NSColor.controlBackgroundColor))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .strokeBorder(Color.primary.opacity(0.10))
+                        .allowsHitTesting(false)
+                )
         }
     }
 
-    private func notice(_ message: String) -> some View {
-        Text(message)
-            .font(.system(size: 12, weight: .light))
-            .foregroundColor(.secondary)
-            .fixedSize(horizontal: false, vertical: true)
+    private var footer: some View {
+        HStack(spacing: 12) {
+            Text("v" + getLocalVersion())
+                .foregroundColor(.secondary)
+            Link("settingIssues", destination: URL(string: "https://github.com/yi-ge/dock-shortcut/issues")!)
+            Spacer()
+            Button("quit") { NSApp.terminate(nil) }
+            Button("menuCheckUpdate") { Updater.shared.check() }
+            Button("settingsDone", action: onHide)
+                .keyboardShortcut(.defaultAction)
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 13)
+    }
+}
+
+private struct SettingsRow<Control: View>: View {
+    let title: LocalizedStringKey
+    let detail: Text?
+    @ViewBuilder let control: () -> Control
+
+    init(_ title: LocalizedStringKey, detail: Text? = nil, @ViewBuilder control: @escaping () -> Control) {
+        self.title = title
+        self.detail = detail
+        self.control = control
+    }
+
+    var body: some View {
+        HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(title)
+                    .fontWeight(.medium)
+                    .accessibilityHidden(true)
+                if let detail {
+                    detail
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            Spacer(minLength: 0)
+            control()
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+    }
+}
+
+private extension ShortcutModifier {
+    var settingsLabel: String {
+        switch self {
+        case .option: return "⌥ Option"
+        case .cmd: return "⌘ Command"
+        case .control: return "⌃ Control"
+        case .shift: return "⇧ Shift"
+        case .alpha: return "⇪ Caps Lock"
+        }
     }
 }
 
@@ -108,24 +233,31 @@ private struct LoginItemToggle: View {
     @State private var error: String?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Toggle(
-                NSLocalizedString("settingLaunchContent", comment: "Start at login"),
-                isOn: Binding(
+        VStack(alignment: .leading, spacing: 0) {
+            SettingsRow("settingLaunchContent") {
+                Toggle("settingLaunchContent", isOn: Binding(
                     get: { isRegistered(status) },
                     set: updateRegistration
-                )
-            )
-            if status == .requiresApproval {
-                Button(NSLocalizedString("openLoginItemSettings", comment: "Open login item settings")) {
-                    SMAppService.openSystemSettingsLoginItems()
-                }
+                ))
+                .labelsHidden()
+                .toggleStyle(SwitchToggleStyle())
             }
-            if let error {
-                Text(error)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+            if status == .requiresApproval || error != nil {
+                VStack(alignment: .leading, spacing: 6) {
+                    if status == .requiresApproval {
+                        Text("loginApprovalRequired")
+                        Button("openLoginItemSettings") {
+                            SMAppService.openSystemSettingsLoginItems()
+                        }
+                    }
+                    if let error {
+                        Label(error, systemImage: "exclamationmark.circle")
+                    }
+                }
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding([.horizontal, .bottom], 14)
             }
         }
         .onAppear(perform: refreshStatus)
@@ -174,5 +306,6 @@ private struct LoginItemToggle: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .frame(width: ContentView.preferredSize.width, height: ContentView.preferredSize.height)
     }
 }
