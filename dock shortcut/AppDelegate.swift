@@ -101,8 +101,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 onHide: { [weak self] in self?.settingsWindow?.orderOut(nil) }
             )
             let window = NSWindow(contentViewController: NSHostingController(rootView: content))
-            window.title = NSLocalizedString("CFBundleDisplayName", comment: "Dock Shortcut")
-            window.setContentSize(NSSize(width: 480, height: 460))
+            window.title = NSLocalizedString("setting", comment: "Settings")
+            window.setContentSize(ContentView.preferredSize)
             window.styleMask.remove(.resizable)
             window.isReleasedWhenClosed = false
             window.center()

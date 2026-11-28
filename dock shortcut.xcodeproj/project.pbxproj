@@ -10,7 +10,6 @@
 		03025A742955383D008A0483 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03025A732955383D008A0483 /* AppDelegate.swift */; };
 		03025A772955A371008A0483 /* dock_shortcutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03025A762955A371008A0483 /* dock_shortcutApp.swift */; };
 		03025A792955B102008A0483 /* DockTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03025A782955B102008A0483 /* DockTile.swift */; };
-		03BF2FF029581DC500AB63AE /* LabeledHStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF2FEF29581DC500AB63AE /* LabeledHStack.swift */; };
 		03BF2FF329582C6500AB63AE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03BF2FF529582C6500AB63AE /* Localizable.strings */; };
 		03BF2FF829585C7800AB63AE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF2FF729585C7800AB63AE /* Utils.swift */; };
 		03BF2FFA295879BF00AB63AE /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF2FF9295879BF00AB63AE /* Updater.swift */; };
@@ -26,7 +25,6 @@
 		03025A762955A371008A0483 /* dock_shortcutApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dock_shortcutApp.swift; sourceTree = "<group>"; };
 		03025A782955B102008A0483 /* DockTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockTile.swift; sourceTree = "<group>"; };
 		03025A7A2955B298008A0483 /* dock-shortcut-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "dock-shortcut-Info.plist"; sourceTree = SOURCE_ROOT; };
-		03BF2FEF29581DC500AB63AE /* LabeledHStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledHStack.swift; sourceTree = "<group>"; };
 		03BF2FF429582C6500AB63AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		03BF2FF629582C6F00AB63AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		03BF2FF729585C7800AB63AE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -71,7 +69,6 @@
 			isa = PBXGroup;
 			children = (
 				03BF2FF529582C6500AB63AE /* Localizable.strings */,
-				03BF2FEF29581DC500AB63AE /* LabeledHStack.swift */,
 				03025A7A2955B298008A0483 /* dock-shortcut-Info.plist */,
 				03025A782955B102008A0483 /* DockTile.swift */,
 				03025A762955A371008A0483 /* dock_shortcutApp.swift */,
@@ -195,7 +192,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03BF2FF029581DC500AB63AE /* LabeledHStack.swift in Sources */,
 				03025A792955B102008A0483 /* DockTile.swift in Sources */,
 				03025A772955A371008A0483 /* dock_shortcutApp.swift in Sources */,
 				03BF30002958866800AB63AE /* Hotkey.swift in Sources */,
